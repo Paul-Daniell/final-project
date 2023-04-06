@@ -8,7 +8,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export const EventPage = () => {
   const toast = useToast();
@@ -101,9 +101,7 @@ export const EventPage = () => {
     setEditedEvent({ ...editedEvent, [e.target.name]: e.target.value });
   };
 
-  const history = useHistory();
-
-  const handleDeleteEvent = async (eventId) => {
+  const handleDeleteEvent = async () => {
     try {
       const response = await fetch(`http://localhost:3000/events/${eventId}`, {
         method: "DELETE",
@@ -116,8 +114,7 @@ export const EventPage = () => {
           duration: 5000,
           isClosable: true,
         });
-        // Redirect to home page or some other page
-        history.push("/");
+        // redirect to home page or some other page
       } else {
         toast({
           title: "Error deleting event.",

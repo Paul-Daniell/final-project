@@ -23,24 +23,10 @@
   ],
   "events": [
     {
-      "id": 1,
-      "createdBy": 1,
-      "title": "BBQ",
-      "description": "nice dinner",
-      "image": "https://cdn.webshopapp.com/shops/334916/themes/179554/v/1741553/assets/banner-1.png?20230211123824",
-      "categoryIds": [
-        1
-      ],
-      "attendedBy": "1",
-      "location": "dumbstreet 2 dumbcity",
-      "startTime": "2023-04-01T10:55:00.000Z",
-      "endTime": "2023-04-02T10:55:00.000Z"
-    },
-    {
       "id": 2,
       "createdBy": 2,
-      "title": "BBQ2",
-      "description": "more food",
+      "title": "Big BBQ ",
+      "description": "Big Meat",
       "image": "https://cdn.webshopapp.com/shops/334916/themes/179554/v/1741553/assets/banner-1.png?20230211123824",
       "categoryIds": [
         1
@@ -49,19 +35,6 @@
       "location": "thuis",
       "startTime": "2023-04-08T11:05:00.000Z",
       "endTime": "2023-04-09T11:05:00.000Z"
-    },
-    {
-      "id": 3,
-      "createdBy": 4,
-      "title": "just another bbq",
-      "description": "foodfest",
-      "image": "https://cdn.webshopapp.com/shops/334916/themes/179554/v/1741553/assets/banner-1.png?20230211123824",
-      "categoryIds": [
-        1
-      ],
-      "location": "dumbstreet 1 dumbcity",
-      "startTime": "2023-04-14T07:52:00.000Z",
-      "endTime": "2023-04-15T07:52:00.000Z"
     }
   ],
   "categories": [
