@@ -111,7 +111,8 @@ export const NewEventForm = () => {
       console.log(result.data);
       toast({
         title: "Event created.",
-        description: "Your event has been successfully created.",
+        description:
+          "Your event has been successfully created, create another or go back to Events",
         status: "success",
         duration: 5000,
         isClosable: true,

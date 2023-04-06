@@ -8,7 +8,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export const EventPage = () => {
   const toast = useToast();
@@ -149,7 +149,7 @@ export const EventPage = () => {
     <Box mt="50px">
       {!isEditing ? (
         <>
-          <img src={event.image} alt={event.title} />
+          <img src={event.image} alt={event.title} width="800px" />
           <h1>{event.title}</h1>
           <p>{event.description}</p>
           <p>Location: {event.location}</p>
@@ -233,7 +233,12 @@ export const EventPage = () => {
           <Button onClick={handleSaveEvent}>Save Event</Button>
         </>
       )}
-      <Button onClick={handleDeleteEvent}>Verwijder evenement</Button>
+      <Link to={"/"}>
+        <Button onClick={handleDeleteEvent}>Delete Event</Button>
+      </Link>
+      <Link to={"/"}>
+        <Button>Back to Events</Button>
+      </Link>
     </Box>
   );
 };

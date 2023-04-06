@@ -12,7 +12,7 @@
     },
     {
       "name": "Peter",
-      "photoUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnx99PMsfal-qbZNcBfqmJCj7zeyxFoDt2zg&usqp=CAU",
+      "photoUrl": "https://pauldaniel.nl/img/avatar-5.png",
       "id": 3
     },
     {
@@ -33,14 +33,78 @@
       ],
       "attendedBy": "1",
       "location": "thuis",
-      "startTime": "2023-04-08T11:05:00.000Z",
-      "endTime": "2023-04-09T11:05:00.000Z"
+      "startTime": "2023-04-15T13:37",
+      "endTime": "2023-04-15T19:56"
+    },
+    {
+      "id": 3,
+      "createdBy": 4,
+      "title": "Tennis inside",
+      "description": "tournament indoors",
+      "image": "https://sportcentrumzeewolde.nl/wp-content/uploads/2018/10/tennis-les-1080x675.jpg",
+      "categoryIds": [
+        2
+      ],
+      "location": "The Tennis Arena",
+      "startTime": "2023-04-15T12:59:00.000Z",
+      "endTime": "2023-04-15T16:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "createdBy": 3,
+      "title": "foodfest",
+      "description": "Eat as much as you can",
+      "image": "https://www.nsmbl.nl/wp-content/uploads/2019/05/foodfestival-tips.jpg",
+      "categoryIds": [
+        1
+      ],
+      "location": "foodpalace 1 Eatcity",
+      "startTime": "2023-04-25T13:02:00.000Z",
+      "endTime": "2023-04-27T13:02:00.000Z"
+    },
+    {
+      "id": 5,
+      "createdBy": 1,
+      "title": "dancevalley",
+      "description": "Party all day long",
+      "image": "https://www.entertainmentbusiness.nl/wp-content/uploads/2021/04/image-asset_800x450_acf_cropped.jpeg",
+      "categoryIds": [
+        3
+      ],
+      "location": "dance 12 Valley",
+      "startTime": "2023-04-18T13:06:00.000Z",
+      "endTime": "2023-04-20T13:06:00.000Z"
+    },
+    {
+      "id": 6,
+      "createdBy": 4,
+      "title": "In trance",
+      "description": "deep sleep training",
+      "image": "https://covers.audiobooks.com/images/covers/full/9798822600133.jpg",
+      "categoryIds": [
+        4
+      ],
+      "location": "at your home",
+      "startTime": "2023-05-05T13:09:00.000Z",
+      "endTime": "2023-05-05T19:09:00.000Z"
     }
   ],
   "categories": [
     {
-      "name": "foodys",
+      "name": "Food",
       "id": 1
+    },
+    {
+      "name": "Sport",
+      "id": 2
+    },
+    {
+      "name": "Party",
+      "id": 3
+    },
+    {
+      "name": "Other",
+      "id": 4
     }
   ]
 }

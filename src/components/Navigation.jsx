@@ -11,6 +11,8 @@ export const Navigation = () => {
         px={5}
         py={3}
         bg="gray.700"
+        position="sticky"
+        top="0"
       >
         <Box>
           <Image src="./img/Region.png" alt="Logo" w="150px" h="150px" />
