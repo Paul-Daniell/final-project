@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Image, Input } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Image } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 export const Navigation = () => {
@@ -23,9 +23,6 @@ export const Navigation = () => {
           </Heading>
         </Box>
 
-        <Box>
-          <Input placeholder="Search" mr={3} />
-        </Box>
         <Box>
           <Link to="/new-event">
             <Button colorScheme="blue">Create new event</Button>

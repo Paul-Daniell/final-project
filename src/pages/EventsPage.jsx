@@ -1,4 +1,12 @@
-import { Box, Heading, Image, SimpleGrid } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Image,
+  Input,
+  SimpleGrid,
+  Flex,
+  Select,
+} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -7,6 +15,8 @@ const API_URL = "http://localhost:3000";
 export const EventsPage = () => {
   const [events, setEvents] = useState([]);
   const [categories, setCategories] = useState({});
+  const [searchInput, setSearchInput] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -29,16 +39,73 @@ export const EventsPage = () => {
     fetchCategories();
   }, []);
 
+  const handleSearchInput = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const handleCategorySelect = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
+  const filteredEvents = events.filter((event) => {
+    if (selectedCategory) {
+      const category = categories[event.categoryIds[0]];
+      return (
+        category === selectedCategory &&
+        (event.title.toLowerCase().includes(searchInput.toLowerCase()) ||
+          event.description.toLowerCase().includes(searchInput.toLowerCase()))
+      );
+    } else {
+      return (
+        event.title.toLowerCase().includes(searchInput.toLowerCase()) ||
+        event.description.toLowerCase().includes(searchInput.toLowerCase())
+      );
+    }
+  });
+
   return (
     <>
-      <Heading as="h1">Events</Heading>
-
-      <SimpleGrid
-        columns={{ sm: 1, md: 2, lg: 3 }}
-        spacing={5}
-        justifyItems="center"
+      <Box
+        bg="#fff"
+        position="sticky"
+        top="174"
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        mb={3}
+        ml="90px"
+        mr="90px"
       >
-        {events.map((event) => (
+        <Heading as="h1" mr="100px">
+          Events
+        </Heading>
+        <Input
+          placeholder="Search"
+          mr={3}
+          onChange={handleSearchInput}
+          color="#5271ff"
+          borderColor="#5271ff"
+          boxSize="md"
+          height="40px"
+        />
+        <Select
+          borderColor="#5271ff"
+          color="#5271ff"
+          placeholder="Filter by category"
+          onChange={handleCategorySelect}
+          value={selectedCategory}
+          maxWidth="200px"
+        >
+          <option value="">All</option>
+          <option value="Food">Food</option>
+          <option value="Sport">Sport</option>
+          <option value="Party">Party</option>
+          <option value="Other">Other</option>
+        </Select>
+      </Box>
+
+      <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} justifyItems="center">
+        {filteredEvents.map((event) => (
           <Link key={event.id} to={`/event/${event.id}`}>
             <Box
               key={event.id}
