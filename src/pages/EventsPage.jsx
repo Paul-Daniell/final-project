@@ -4,7 +4,6 @@ import {
   Image,
   Input,
   SimpleGrid,
-  Flex,
   Select,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";

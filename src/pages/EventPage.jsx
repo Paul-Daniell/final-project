@@ -6,6 +6,9 @@ import {
   Input,
   Text,
   useToast,
+  Tooltip,
+  Heading,
+  Image,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -19,6 +22,8 @@ export const EventPage = () => {
   const [createdByUser, setCreatedByUser] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedEvent, setEditedEvent] = useState({});
+
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -149,8 +154,27 @@ export const EventPage = () => {
     <Box mt="50px">
       {!isEditing ? (
         <>
-          <img src={event.image} alt={event.title} width="800px" />
-          <h1>{event.title}</h1>
+          <Box>
+            <Heading as="h3" fontSize="lg">
+              Created By: {createdByUser.name}
+            </Heading>
+            {createdByUser && (
+              <img
+                src={createdByUser.photoUrl}
+                width="80px"
+                alt={createdByUser.name}
+              />
+            )}
+          </Box>
+          <Image
+            src={event.image}
+            alt={event.title}
+            maxWidth="800px"
+            borderRadius="50%"
+          />
+          <Heading as="h1" fontSize="2xl">
+            {event.title}
+          </Heading>
           <p>{event.description}</p>
           <p>Location: {event.location}</p>
           <p>Start Time: {new Date(event.startTime).toLocaleString()}</p>
@@ -160,20 +184,23 @@ export const EventPage = () => {
             Categories:{" "}
             {selectedCategories.map((category) => category.name).join(", ")}
           </p>
-          <p>
-            Created By: {createdByUser.name}
-            {createdByUser && (
-              <img
-                src={createdByUser.photoUrl}
-                width="80px"
-                alt={createdByUser.name}
-              />
-            )}
-          </p>
-          <Button onClick={handleEditEvent}>Edit Event</Button>
+
+          <Button onClick={handleEditEvent} bg="green.400" color="white">
+            Edit Event
+          </Button>
         </>
       ) : (
         <>
+          <FormControl id="image">
+            <FormLabel>Image</FormLabel>
+            <Text fontSize="sm">Change the Url</Text>
+            <Input
+              type="text"
+              name="image"
+              value={editedEvent.image}
+              onChange={handleChange}
+            />
+          </FormControl>
           <FormControl id="title">
             <FormLabel>Title</FormLabel>
             <Text fontSize="sm">Change the title!</Text>
@@ -233,11 +260,27 @@ export const EventPage = () => {
           <Button onClick={handleSaveEvent}>Save Event</Button>
         </>
       )}
+      <Tooltip
+        isOpen={showTooltip}
+        label="Are you sure you want to delete this Event? This can't be undone!"
+        bg="red.400"
+        fontSize="xl"
+      >
+        <Link to={"/"}>
+          <Button
+            onClick={handleDeleteEvent}
+            bg="red.400"
+            _hover={{ bg: "red.300" }}
+            color="white"
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          >
+            Delete Event
+          </Button>
+        </Link>
+      </Tooltip>
       <Link to={"/"}>
-        <Button onClick={handleDeleteEvent}>Delete Event</Button>
-      </Link>
-      <Link to={"/"}>
-        <Button>Back to Events</Button>
+        <Button bg="yellow.400">Back to Events</Button>
       </Link>
     </Box>
   );

@@ -19,6 +19,11 @@
       "name": "miep",
       "photoUrl": "https://pauldaniel.nl/img/avatar-1.png",
       "id": 4
+    },
+    {
+      "name": "Valery",
+      "photoUrl": "https://pauldaniel.nl/img/avatar-3.png",
+      "id": 5
     }
   ],
   "events": [
@@ -27,7 +32,7 @@
       "createdBy": 2,
       "title": "Big BBQ ",
       "description": "Big Meat",
-      "image": "https://cdn.webshopapp.com/shops/334916/themes/179554/v/1741553/assets/banner-1.png?20230211123824",
+      "image": "https://www.intergardshop.de/media/catalog/product/cache/9b2d46eab9d27fdfe8061bd12b88a0fa/k/a/kamado-2_1.png",
       "categoryIds": [
         1
       ],
@@ -80,13 +85,26 @@
       "createdBy": 4,
       "title": "In trance",
       "description": "deep sleep training",
-      "image": "https://covers.audiobooks.com/images/covers/full/9798822600133.jpg",
+      "image": "https://static.ouders.nl/uploads/articles/2021/9/wat_is_slaaptraining_voor_baby_s_en_hoe_kan_het_anders_0f6e72-1200x630.jpg",
       "categoryIds": [
         4
       ],
       "location": "at your home",
       "startTime": "2023-05-05T13:09:00.000Z",
       "endTime": "2023-05-05T19:09:00.000Z"
+    },
+    {
+      "id": 7,
+      "createdBy": 5,
+      "title": "Just another bbq",
+      "description": "much mor meat",
+      "image": "https://cdn.webshopapp.com/shops/334916/themes/179554/v/1741553/assets/banner-1.png?20230211123824",
+      "categoryIds": [
+        1
+      ],
+      "location": "grill 66 baketown",
+      "startTime": "2023-04-10T18:39:00.000Z",
+      "endTime": "2023-04-09T22:39:00.000Z"
     }
   ],
   "categories": [
