@@ -25,7 +25,9 @@ export const Navigation = () => {
 
         <Box>
           <Link to="/new-event">
-            <Button colorScheme="blue">Create new event</Button>
+            <Button bg="#5271ff" color="white" _hover={{ bg: "blue.300" }}>
+              Create new event
+            </Button>
           </Link>
         </Box>
       </Flex>

@@ -5,6 +5,7 @@ import {
   Input,
   SimpleGrid,
   Select,
+  Text,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -114,6 +115,7 @@ export const EventsPage = () => {
               overflow="hidden"
               boxSize="md"
               mt="50px"
+              mb="20px"
               _hover={{ boxShadow: "lg" }}
             >
               <Image
@@ -136,15 +138,39 @@ export const EventsPage = () => {
                     .map((categoryId) => categories[categoryId])
                     .join(", ")}
                 </Box>
-                <Box>
-                  Start Time: {new Date(event.startTime).toLocaleString()}
-                </Box>
-                <Box>End Time: {new Date(event.endTime).toLocaleString()}</Box>
+                <Text>
+                  Start Time:{" "}
+                  {new Date(event.startTime).toLocaleString([], {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </Text>
+                <Text>
+                  End Time:{" "}
+                  {new Date(event.endTime).toLocaleString([], {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </Text>
               </Box>
             </Box>
           </Link>
         ))}
       </SimpleGrid>
+      <Box
+        as="footer"
+        bg="#5271ff"
+        py="4"
+        px="6"
+        borderTop="1px solid"
+        borderTopColor="gray.200"
+      ></Box>
     </>
   );
 };

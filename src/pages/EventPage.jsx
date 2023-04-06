@@ -155,133 +155,221 @@ export const EventPage = () => {
       {!isEditing ? (
         <>
           <Box>
-            <Heading as="h3" fontSize="lg">
-              Created By: {createdByUser.name}
-            </Heading>
-            {createdByUser && (
-              <img
-                src={createdByUser.photoUrl}
-                width="80px"
-                alt={createdByUser.name}
+            <Box ml="15px">
+              <Heading as="h3" fontSize="lg">
+                Created By: {createdByUser.name}
+              </Heading>
+              {createdByUser && (
+                <img
+                  src={createdByUser.photoUrl}
+                  width="80px"
+                  alt={createdByUser.name}
+                />
+              )}
+            </Box>
+
+            <Box
+              border="4px"
+              borderColor="#5271ff"
+              borderRadius="50%"
+              width="900px"
+              height="600px"
+              ml="400px"
+              mt="-100px"
+            >
+              <Image
+                src={event.image}
+                alt={event.title}
+                width="600px"
+                height="450px"
+                borderRadius="50%"
+                mt="10px"
+                ml="10px"
+                border="8px"
+                borderColor="#5271ff"
               />
-            )}
+              <Box ml="50px" mt="-500px">
+                <Heading
+                  as="h1"
+                  fontSize="8xl"
+                  fontWeight="extrabold"
+                  color="white"
+                  style={{
+                    textOutline: "2px 2px 0 #5271ff",
+                    WebkitTextStroke: "2px #5271ff", // voor Safari
+                  }}
+                >
+                  {event.title}
+                </Heading>
+              </Box>
+            </Box>
           </Box>
-          <Image
-            src={event.image}
-            alt={event.title}
-            maxWidth="800px"
-            borderRadius="50%"
-          />
-          <Heading as="h1" fontSize="2xl">
-            {event.title}
-          </Heading>
-          <p>{event.description}</p>
-          <p>Location: {event.location}</p>
-          <p>Start Time: {new Date(event.startTime).toLocaleString()}</p>
-          <p>End Time: {new Date(event.endTime).toLocaleString()}</p>
 
-          <p>
-            Categories:{" "}
-            {selectedCategories.map((category) => category.name).join(", ")}
-          </p>
+          <Box
+            position="absolute"
+            top="60%"
+            left="55%"
+            transform="translate(-10%, -70%)"
+          >
+            <Text>
+              Categorie:{" "}
+              {selectedCategories.map((category) => category.name).join(", ")}
+            </Text>
+            <Text>
+              Start Time:{" "}
+              {new Date(event.startTime).toLocaleString([], {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </Text>
+            <Text>
+              End Time:{" "}
+              {new Date(event.endTime).toLocaleString([], {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </Text>
 
-          <Button onClick={handleEditEvent} bg="green.400" color="white">
-            Edit Event
-          </Button>
+            <Text> Description: </Text>
+            <Text> {event.description}</Text>
+            <Text>Location: </Text>
+            <Text>{event.location}</Text>
+          </Box>
+          <Box
+            position="absolute"
+            top="40%"
+            left="2%"
+            transform="translate(-10%, -30%)"
+          >
+            <Button
+              onClick={handleEditEvent}
+              bg="#5271ff"
+              color="white"
+              mr="5px"
+              _hover={{ bg: "green.400" }}
+            >
+              Edit Event
+            </Button>
+            <Link to={"/"}>
+              <Button bg="#5271ff" color="white" _hover={{ bg: "yellow.400" }}>
+                Back to Events
+              </Button>
+            </Link>
+          </Box>
+          <Box>
+            <Tooltip
+              isOpen={showTooltip}
+              label="Are you sure you want to delete this Event? This can't be undone!"
+              bg="red.400"
+              fontSize="xl"
+            >
+              <Link to={"/"}>
+                <Button
+                  onClick={handleDeleteEvent}
+                  bg="red.400"
+                  _hover={{ bg: "red.300" }}
+                  color="white"
+                  onMouseEnter={() => setShowTooltip(true)}
+                  onMouseLeave={() => setShowTooltip(false)}
+                >
+                  Delete Event
+                </Button>
+              </Link>
+            </Tooltip>
+          </Box>
         </>
       ) : (
         <>
-          <FormControl id="image">
-            <FormLabel>Image</FormLabel>
-            <Text fontSize="sm">Change the Url</Text>
-            <Input
-              type="text"
-              name="image"
-              value={editedEvent.image}
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl id="title">
-            <FormLabel>Title</FormLabel>
-            <Text fontSize="sm">Change the title!</Text>
-            <Input
-              type="text"
-              name="title"
-              value={editedEvent.title}
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl id="description">
-            <FormLabel>Description</FormLabel>
-            <Text fontSize="sm">Change the description!</Text>
-            <Input
-              type="text"
-              name="description"
-              value={editedEvent.description}
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl id="location">
-            <FormLabel>Location</FormLabel>
-            <Text fontSize="sm">
-              Change the location! Do not forget address and city
-            </Text>
-            <Input
-              type="text"
-              name="location"
-              value={editedEvent.location}
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl id="startTime">
-            <FormLabel>Start Time</FormLabel>
-            <Text fontSize="sm">
-              The date and time will stay the same, unless you change it here!
-            </Text>
-            <Input
-              name="startTime"
-              type="datetime-local"
-              value={editedEvent.startTime}
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl id="endTime">
-            <FormLabel>End Time</FormLabel>
-            <Text fontSize="sm">
-              The date and time will stay the same, unless you change it here!
-            </Text>
-            <Input
-              name="endTime"
-              type="datetime-local"
-              value={editedEvent.endTime}
-              onChange={handleChange}
-            />
-          </FormControl>
-          <Button onClick={handleSaveEvent}>Save Event</Button>
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <Box width="800px">
+              <FormControl id="image" width="100%">
+                <FormLabel>Image</FormLabel>
+                <Text fontSize="sm">Change the Url</Text>
+                <Input
+                  type="text"
+                  name="image"
+                  value={editedEvent.image}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl id="title" width="100%">
+                <FormLabel>Title</FormLabel>
+                <Text fontSize="sm">Change the title!</Text>
+                <Input
+                  type="text"
+                  name="title"
+                  value={editedEvent.title}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl id="description" width="100%">
+                <FormLabel>Description</FormLabel>
+                <Text fontSize="sm">Change the description!</Text>
+                <Input
+                  type="text"
+                  name="description"
+                  value={editedEvent.description}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl id="location" width="100%">
+                <FormLabel>Location</FormLabel>
+                <Text fontSize="sm">
+                  Change the location! Do not forget address and city
+                </Text>
+                <Input
+                  type="text"
+                  name="location"
+                  value={editedEvent.location}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl id="startTime" width="100%">
+                <FormLabel>Start Time</FormLabel>
+                <Text fontSize="sm">
+                  The date and time will stay the same, unless you change it
+                  here!
+                </Text>
+                <Input
+                  name="startTime"
+                  type="datetime-local"
+                  value={editedEvent.startTime}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl id="endTime" width="100%">
+                <FormLabel>End Time</FormLabel>
+                <Text fontSize="sm">
+                  The date and time will stay the same, unless you change it
+                  here!
+                </Text>
+                <Input
+                  name="endTime"
+                  type="datetime-local"
+                  value={editedEvent.endTime}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <Button
+                onClick={handleSaveEvent}
+                bg="#5271ff"
+                color="white"
+                _hover={{ bg: "green.400" }}
+                width="100%"
+                mt="20px"
+              >
+                Save Event
+              </Button>
+            </Box>
+          </Box>
         </>
       )}
-      <Tooltip
-        isOpen={showTooltip}
-        label="Are you sure you want to delete this Event? This can't be undone!"
-        bg="red.400"
-        fontSize="xl"
-      >
-        <Link to={"/"}>
-          <Button
-            onClick={handleDeleteEvent}
-            bg="red.400"
-            _hover={{ bg: "red.300" }}
-            color="white"
-            onMouseEnter={() => setShowTooltip(true)}
-            onMouseLeave={() => setShowTooltip(false)}
-          >
-            Delete Event
-          </Button>
-        </Link>
-      </Tooltip>
-      <Link to={"/"}>
-        <Button bg="yellow.400">Back to Events</Button>
-      </Link>
     </Box>
   );
 };

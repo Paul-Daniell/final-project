@@ -15,6 +15,7 @@ import {
   ModalBody,
   ModalCloseButton,
   useToast,
+  Box,
 } from "@chakra-ui/react";
 
 import { NewUserForm } from "./NewUsers";
@@ -135,107 +136,130 @@ export const NewEventForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <FormControl id="createdBy" isRequired>
-        <FormLabel>Created By</FormLabel>
-        <Select
-          name="createdBy"
-          onChange={handleInputChange}
-          value={formData.createdBy}
-          placeholder="Select User"
+    <Box display="flex" justifyContent="center" mt="10px">
+      <form onSubmit={handleSubmit}>
+        <FormControl id="createdBy" isRequired width="800px">
+          <FormLabel>Created By</FormLabel>
+          <Select
+            name="createdBy"
+            onChange={handleInputChange}
+            value={formData.createdBy}
+            placeholder="Select User"
+          >
+            {users.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.name}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
+        <Button
+          onClick={handleOpenNewUserModal}
+          bg="#5271ff"
+          color="white"
+          mt="5px"
+          _hover={{ bg: "green.400" }}
         >
-          {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name}
-            </option>
-          ))}
-        </Select>
-      </FormControl>
-      <Button ml={4} onClick={handleOpenNewUserModal}>
-        Create New User
-      </Button>
-      <Modal isOpen={isNewUserModalOpen} onClose={handleCloseNewUserModal}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Create New User</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <NewUserForm closeModal={handleCloseNewUserModal} />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-      <FormControl id="title" isRequired>
-        <FormLabel>Title</FormLabel>
-        <Input
-          name="title"
-          onChange={handleInputChange}
-          value={formData.title}
-        />
-      </FormControl>
-      <FormControl id="description" isRequired>
-        <FormLabel>Description</FormLabel>
-        <Textarea
-          name="description"
-          onChange={handleInputChange}
-          value={formData.description}
-        />
-      </FormControl>
-      <FormControl id="image" isRequired>
-        <FormLabel>Image</FormLabel>
-        <Input
-          name="image"
-          onChange={handleInputChange}
-          value={formData.image}
-        />
-      </FormControl>
-      <FormControl id="categoryIds" isRequired>
-        <FormLabel>Category</FormLabel>
-        <Select
-          name="category"
-          onChange={handleCategoryChange}
-          value={formData.categoryIds[0]}
-          placeholder="Select Category"
+          Create New User
+        </Button>
+        <Modal isOpen={isNewUserModalOpen} onClose={handleCloseNewUserModal}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Create New User</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <NewUserForm closeModal={handleCloseNewUserModal} />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+        <FormControl id="title" isRequired width="800px">
+          <FormLabel>Title</FormLabel>
+          <Input
+            name="title"
+            onChange={handleInputChange}
+            value={formData.title}
+          />
+        </FormControl>
+        <FormControl id="description" isRequired width="800px">
+          <FormLabel>Description</FormLabel>
+          <Textarea
+            name="description"
+            onChange={handleInputChange}
+            value={formData.description}
+          />
+        </FormControl>
+        <FormControl id="image" isRequired width="800px">
+          <FormLabel>Image</FormLabel>
+          <Input
+            name="image"
+            onChange={handleInputChange}
+            value={formData.image}
+          />
+        </FormControl>
+        <FormControl id="categoryIds" isRequired width="800px">
+          <FormLabel>Category</FormLabel>
+          <Select
+            name="category"
+            onChange={handleCategoryChange}
+            value={formData.categoryIds[0]}
+            placeholder="Select Category"
+          >
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl id="location" isRequired width="800px">
+          <FormLabel>Location</FormLabel>
+          <Input
+            name="location"
+            onChange={handleInputChange}
+            value={formData.location}
+            placeholder="Please fill in the address and city of the event!"
+          />
+        </FormControl>
+        <FormControl id="startTime" isRequired width="800px">
+          <FormLabel>Start Time</FormLabel>
+          <Input
+            type="datetime-local"
+            name="startTime"
+            onChange={handleInputChange}
+            value={formData.startTime}
+          />
+        </FormControl>
+        <FormControl id="endTime" isRequired width="800px">
+          <FormLabel>End Time</FormLabel>
+          <Input
+            type="datetime-local"
+            name="endTime"
+            onChange={handleInputChange}
+            value={formData.endTime}
+          />
+        </FormControl>
+        <Button
+          type="submit"
+          colorScheme="green"
+          bg="#5271ff"
+          color="white"
+          mt="5px"
+          mr="5px"
+          _hover={{ bg: "green.400" }}
         >
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl id="location" isRequired>
-        <FormLabel>Location</FormLabel>
-        <Input
-          name="location"
-          onChange={handleInputChange}
-          value={formData.location}
-          placeholder="Please fill in the address and city of the event!"
-        />
-      </FormControl>
-      <FormControl id="startTime" isRequired>
-        <FormLabel>Start Time</FormLabel>
-        <Input
-          type="datetime-local"
-          name="startTime"
-          onChange={handleInputChange}
-          value={formData.startTime}
-        />
-      </FormControl>
-      <FormControl id="endTime" isRequired>
-        <FormLabel>End Time</FormLabel>
-        <Input
-          type="datetime-local"
-          name="endTime"
-          onChange={handleInputChange}
-          value={formData.endTime}
-        />
-      </FormControl>
-      <Button type="submit" colorScheme="green" mt={4}>
-        Create Event
-      </Button>
-      <Link to="/">
-        <Button colorScheme="blue">Back to Events</Button>
-      </Link>
-    </form>
+          Create Event
+        </Button>
+        <Link to="/">
+          <Button
+            bg="#5271ff"
+            color="white"
+            mt="5px"
+            _hover={{ bg: "yellow.400" }}
+          >
+            Back to Events
+          </Button>
+        </Link>
+      </form>
+    </Box>
   );
 };

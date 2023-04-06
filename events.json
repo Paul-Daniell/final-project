@@ -24,6 +24,11 @@
       "name": "Valery",
       "photoUrl": "https://pauldaniel.nl/img/avatar-3.png",
       "id": 5
+    },
+    {
+      "name": "OhNo",
+      "photoUrl": "https://pauldaniel.nl/img/avatar-7.png",
+      "id": 6
     }
   ],
   "events": [
@@ -37,9 +42,9 @@
         1
       ],
       "attendedBy": "1",
-      "location": "thuis",
-      "startTime": "2023-04-15T13:37",
-      "endTime": "2023-04-15T19:56"
+      "location": "BigBBQ road 99 Grillia",
+      "startTime": "2023-04-16T13:00",
+      "endTime": "2023-04-16T20:00"
     },
     {
       "id": 3,
@@ -94,17 +99,17 @@
       "endTime": "2023-05-05T19:09:00.000Z"
     },
     {
-      "id": 7,
-      "createdBy": 5,
-      "title": "Just another bbq",
-      "description": "much mor meat",
-      "image": "https://cdn.webshopapp.com/shops/334916/themes/179554/v/1741553/assets/banner-1.png?20230211123824",
+      "id": 8,
+      "createdBy": 6,
+      "title": "Ping Pong",
+      "description": "A nice game of table tennis",
+      "image": "https://img.freepik.com/free-vector/people-playing-table-tennis_23-2148662482.jpg",
       "categoryIds": [
-        1
+        2
       ],
-      "location": "grill 66 baketown",
-      "startTime": "2023-04-10T18:39:00.000Z",
-      "endTime": "2023-04-09T22:39:00.000Z"
+      "location": "pingpongstreet 1 Pjingpjongcity",
+      "startTime": "2023-04-17T11:00:00.000Z",
+      "endTime": "2023-04-17T14:30:00.000Z"
     }
   ],
   "categories": [
