@@ -26,12 +26,7 @@ export const Navigation = () => {
         </Box>
         <Box>
           <Link to="/new-event">
-            <Button colorScheme="blue">Maak nieuw event</Button>
-          </Link>
-        </Box>
-        <Box>
-          <Link to="/new-user">
-            <Button colorScheme="blue">create new user</Button>
+            <Button colorScheme="blue">Create new event</Button>
           </Link>
         </Box>
       </Flex>

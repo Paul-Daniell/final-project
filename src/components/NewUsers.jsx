@@ -9,12 +9,14 @@ import {
   Flex,
   Image,
   Center,
+  Text,
 } from "@chakra-ui/react";
 
 export const NewUserForm = () => {
   const [name, setName] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -37,9 +39,15 @@ export const NewUserForm = () => {
       // reset form data
       setName("");
       setPhotoUrl("");
+      setSuccess(true);
     } catch (error) {
       setError("Something went wrong. Please try again later.");
     }
+  };
+
+  const handleOkClick = () => {
+    setSuccess(false);
+    window.location.reload();
   };
 
   return (
@@ -70,6 +78,14 @@ export const NewUserForm = () => {
             Create User
           </Button>
         </Flex>
+        {success && (
+          <Flex direction="column" align="center" mt={4}>
+            <Text>User Successfully Created</Text>
+            <Button onClick={handleOkClick} mt={2}>
+              Ok
+            </Button>
+          </Flex>
+        )}
       </FormControl>
     </form>
   );

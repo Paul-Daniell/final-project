@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
 import {
   FormControl,
   FormLabel,
@@ -7,7 +8,17 @@ import {
   Select,
   Textarea,
   Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  useToast,
 } from "@chakra-ui/react";
+
+import { NewUserForm } from "./NewUsers";
+import { Link } from "react-router-dom";
 
 export const NewEventForm = () => {
   const [users, setUsers] = useState([]);
@@ -23,6 +34,17 @@ export const NewEventForm = () => {
     startTime: "",
     endTime: "",
   });
+  const [setError] = useState("");
+
+  const [isNewUserModalOpen, setIsNewUserModalOpen] = useState(false);
+
+  const handleOpenNewUserModal = () => {
+    setIsNewUserModalOpen(true);
+  };
+
+  const handleCloseNewUserModal = () => {
+    setIsNewUserModalOpen(false);
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -38,6 +60,8 @@ export const NewEventForm = () => {
     fetchUsers();
     fetchCategories();
   }, []);
+
+  const toast = useToast();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -61,53 +85,62 @@ export const NewEventForm = () => {
       description,
       image,
       categoryIds,
-      attendedBy,
       location,
       startTime,
       endTime,
     } = formData;
 
-    const selectedUsers = attendedBy.map((user) => parseInt(user));
+    try {
+      const events = await axios.get("http://localhost:3000/events");
+      const newId = events.data.length
+        ? events.data[events.data.length - 1].id + 1
+        : 1;
 
-    const events = await axios.get("http://localhost:3000/events");
-    const newId = events.data.length
-      ? events.data[events.data.length - 1].id + 1
-      : 1;
+      const result = await axios.post("http://localhost:3000/events", {
+        id: newId,
+        createdBy: parseInt(createdBy),
+        title,
+        description,
+        image,
+        categoryIds,
 
-    const result = await axios.post("http://localhost:3000/events", {
-      id: newId,
-      createdBy: parseInt(createdBy),
-      title,
-      description,
-      image,
-      categoryIds,
-      attendedBy: selectedUsers,
-      location,
-      startTime: new Date(startTime).toISOString(),
-      endTime: new Date(endTime).toISOString(),
-    });
-    console.log(result.data);
-    // reset form data
-    setFormData({
-      createdBy: "",
-      title: "",
-      description: "",
-      image: "",
-      categoryIds: [],
-      attendedBy: [],
-      location: "",
-      startTime: "",
-      endTime: "",
-    });
+        location,
+        startTime: new Date(startTime).toISOString(),
+        endTime: new Date(endTime).toISOString(),
+      });
+      console.log(result.data);
+      toast({
+        title: "Event created.",
+        description: "Your event has been successfully created.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+      // reset form data
+      setFormData({
+        createdBy: "",
+        title: "",
+        description: "",
+        image: "",
+        categoryIds: [],
+        location: "",
+        startTime: "",
+        endTime: "",
+      });
+    } catch (e) {
+      console.log(e);
+      setError("Failed to create event. Please try again.");
+    }
   };
+
   return (
     <form onSubmit={handleSubmit}>
-      <FormControl>
-        <FormLabel>Created By:</FormLabel>
+      <FormControl id="createdBy" isRequired>
+        <FormLabel>Created By</FormLabel>
         <Select
           name="createdBy"
-          value={formData.createdBy}
           onChange={handleInputChange}
+          value={formData.createdBy}
           placeholder="Select User"
         >
           {users.map((user) => (
@@ -117,43 +150,49 @@ export const NewEventForm = () => {
           ))}
         </Select>
       </FormControl>
-      <br />
-      <FormControl>
-        <FormLabel>Title:</FormLabel>
+      <Button ml={4} onClick={handleOpenNewUserModal}>
+        Create New User
+      </Button>
+      <Modal isOpen={isNewUserModalOpen} onClose={handleCloseNewUserModal}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Create New User</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <NewUserForm closeModal={handleCloseNewUserModal} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+      <FormControl id="title" isRequired>
+        <FormLabel>Title</FormLabel>
         <Input
-          type="text"
           name="title"
-          value={formData.title}
           onChange={handleInputChange}
+          value={formData.title}
         />
       </FormControl>
-      <br />
-      <FormControl>
-        <FormLabel>Description:</FormLabel>
+      <FormControl id="description" isRequired>
+        <FormLabel>Description</FormLabel>
         <Textarea
           name="description"
+          onChange={handleInputChange}
           value={formData.description}
-          onChange={handleInputChange}
-          width="400px"
         />
       </FormControl>
-      <br />
-      <FormControl>
-        <FormLabel>Image:</FormLabel>
+      <FormControl id="image" isRequired>
+        <FormLabel>Image</FormLabel>
         <Input
-          type="text"
           name="image"
-          value={formData.image}
           onChange={handleInputChange}
+          value={formData.image}
         />
       </FormControl>
-      <br />
-      <FormControl>
-        <FormLabel>Category:</FormLabel>
+      <FormControl id="categoryIds" isRequired>
+        <FormLabel>Category</FormLabel>
         <Select
           name="category"
-          value={formData.category}
           onChange={handleCategoryChange}
+          value={formData.categoryIds[0]}
           placeholder="Select Category"
         >
           {categories.map((category) => (
@@ -163,48 +202,39 @@ export const NewEventForm = () => {
           ))}
         </Select>
       </FormControl>
-      <br />
-      <FormControl>
-        <FormLabel>Attended By:</FormLabel>
+      <FormControl id="location" isRequired>
+        <FormLabel>Location</FormLabel>
         <Input
-          type="text"
-          name="attendedBy"
-          value={formData.attendedBy}
-          onChange={handleInputChange}
-        />
-      </FormControl>
-      <br />
-      <FormControl>
-        <FormLabel>Location:</FormLabel>
-        <input
-          type="text"
           name="location"
-          value={formData.location}
           onChange={handleInputChange}
+          value={formData.location}
+          placeholder="Please fill in the address and city of the event!"
         />
       </FormControl>
-      <br />
-      <FormControl>
-        <FormLabel>Start Time:</FormLabel>
-        <input
+      <FormControl id="startTime" isRequired>
+        <FormLabel>Start Time</FormLabel>
+        <Input
           type="datetime-local"
           name="startTime"
-          value={formData.startTime}
           onChange={handleInputChange}
+          value={formData.startTime}
         />
       </FormControl>
-      <br />
-      <FormControl>
-        <FormLabel>End Time:</FormLabel>
-        <input
+      <FormControl id="endTime" isRequired>
+        <FormLabel>End Time</FormLabel>
+        <Input
           type="datetime-local"
           name="endTime"
-          value={formData.endTime}
           onChange={handleInputChange}
+          value={formData.endTime}
         />
       </FormControl>
-      <br />
-      <Button type="submit">Create Event</Button>
+      <Button type="submit" colorScheme="green" mt={4}>
+        Create Event
+      </Button>
+      <Link to="/">
+        <Button colorScheme="blue">Back to Events</Button>
+      </Link>
     </form>
   );
 };
