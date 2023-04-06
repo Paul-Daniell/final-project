@@ -1,8 +1,17 @@
-import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 export const EventPage = () => {
+  const toast = useToast();
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -76,6 +85,13 @@ export const EventPage = () => {
       const data = await response.json();
       setEvent(data);
       setIsEditing(false);
+      toast({
+        title: "Event saved.",
+        description: "The event was successfully edited and saved.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (err) {
       console.error(err);
     }
@@ -84,6 +100,53 @@ export const EventPage = () => {
   const handleChange = (e) => {
     setEditedEvent({ ...editedEvent, [e.target.name]: e.target.value });
   };
+
+  const history = useHistory();
+
+  const handleDeleteEvent = async (eventId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/events/${eventId}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        toast({
+          title: "Event deleted.",
+          description: "The event was successfully deleted.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+        // Redirect to home page or some other page
+        history.push("/");
+      } else {
+        toast({
+          title: "Error deleting event.",
+          description: "An error occurred while deleting the event.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  function formatDateTime(dateTime) {
+    const date = new Date(dateTime);
+    const year = date.getFullYear();
+    const month =
+      date.getMonth() + 1 < 10
+        ? `0${date.getMonth() + 1}`
+        : date.getMonth() + 1;
+    const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+    const hours =
+      date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+    const minutes =
+      date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  }
 
   return (
     <Box mt="50px">
@@ -116,6 +179,7 @@ export const EventPage = () => {
         <>
           <FormControl id="title">
             <FormLabel>Title</FormLabel>
+            <Text fontSize="sm">Change the title!</Text>
             <Input
               type="text"
               name="title"
@@ -125,6 +189,7 @@ export const EventPage = () => {
           </FormControl>
           <FormControl id="description">
             <FormLabel>Description</FormLabel>
+            <Text fontSize="sm">Change the description!</Text>
             <Input
               type="text"
               name="description"
@@ -134,6 +199,9 @@ export const EventPage = () => {
           </FormControl>
           <FormControl id="location">
             <FormLabel>Location</FormLabel>
+            <Text fontSize="sm">
+              Change the location! Do not forget address and city
+            </Text>
             <Input
               type="text"
               name="location"
@@ -143,18 +211,24 @@ export const EventPage = () => {
           </FormControl>
           <FormControl id="startTime">
             <FormLabel>Start Time</FormLabel>
+            <Text fontSize="sm">
+              The date and time will stay the same, unless you change it here!
+            </Text>
             <Input
-              type="text"
               name="startTime"
+              type="datetime-local"
               value={editedEvent.startTime}
               onChange={handleChange}
             />
           </FormControl>
           <FormControl id="endTime">
             <FormLabel>End Time</FormLabel>
+            <Text fontSize="sm">
+              The date and time will stay the same, unless you change it here!
+            </Text>
             <Input
-              type="text"
               name="endTime"
+              type="datetime-local"
               value={editedEvent.endTime}
               onChange={handleChange}
             />
@@ -162,6 +236,7 @@ export const EventPage = () => {
           <Button onClick={handleSaveEvent}>Save Event</Button>
         </>
       )}
+      <Button onClick={handleDeleteEvent}>Verwijder evenement</Button>
     </Box>
   );
 };
